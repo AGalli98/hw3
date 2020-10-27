@@ -80,9 +80,11 @@ def sentimentAnalysis(sentimentcolumn, keycolumn):
     totdf['polarity'] = polarity
     #bestsentiment is based on the highest polarity with the lowest subjectivity (most positive and most factual)
     bestsentiment = totdf[sentimentcolumn].iloc[totdf.sort_values(by = ['polarity','subjectivity'], ascending = [False,True]).index[0]]
+    worstsentiment = totdf[sentimentcolumn].iloc[totdf.sort_values(by = ['polarity','subjectivity'], ascending = [False,True]).index[-1]]
     #key is returned as well to say which company in this case has that purpose
     bestkey = totdf[keycolumn].iloc[totdf.sort_values(by = ['polarity','subjectivity'], ascending = [False,True]).index[0]]
-    return bestsentiment, bestkey
+    worstkey = totdf[keycolumn].iloc[totdf.sort_values(by = ['polarity','subjectivity'], ascending = [False,True]).index[-1]]
+    return bestsentiment, bestkey, worstsentiment, worstkey
 
 def mostUsedTokens(num, column):
     global totdf
